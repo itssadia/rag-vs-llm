@@ -1,5 +1,5 @@
 # rag-vs-llm
-This project is a simple demonstration of LLM with RAG and No-RAG. This depicts how grounding and information retrieval contribute to the accuracy of the model output. It compares a standard LLM with a Retrieval-Augmented Generation (RAG) system using a fully local setup.
+This project is a simple demonstration of LLM with RAG and No-RAG. This depicts how grounding and information retrieval contribute to the accuracy of the model output. It compares a standard LLM with a Retrieval-Augmented Generation (RAG) system using a fully local setup. Here, the model will answer few questions regarding a candidates eligibility for ML engineer role and the external resource for RAG here is the resume uploaded by the candidate. 
 
 ## Key Idea
 - No-RAG: Generic answers (hallucination-prone)
