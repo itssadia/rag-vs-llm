@@ -1,0 +1,7 @@
+Worked in the telecom industry in South Asia.
+
+Built a churn prediction model processing 3M+ daily records.
+
+Improved customer retention by 12% using machine learning.
+
+Collaborated with product and engineering teams to deploy models into production.

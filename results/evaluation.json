@@ -1,0 +1,73 @@
+{
+    "results": [
+        {
+            "question": "How many records did the candidate process daily?",
+            "ground_truth": "3M",
+            "no_rag": {
+                "answer": " I don't have that specific data about any particular candidate. The information provided doesn't include details about a specific individual or their daily processing of records. Please verify this information from an authoritative source such as the campaign, election office, or public records related to the candidate in question.",
+                "correct": false
+            },
+            "rag": {
+                "answer": " The candidate processed 3,000,000 daily records.",
+                "correct": false,
+                "retrieved_context": [
+                    "Built a churn prediction model processing 3M+ daily records.",
+                    "Improved customer retention by 12% using machine learning."
+                ]
+            }
+        },
+        {
+            "question": "What industry experience does the candidate have?",
+            "ground_truth": "telecom",
+            "no_rag": {
+                "answer": " The answer to this question would vary depending on the specific candidate being discussed. To provide an accurate response, I would need access to the individual's resume or CV, which contains details about their work history and industry experience. However, if a general description is needed, the candidate may have experience in various industries such as technology, finance, healthcare, education, retail, etc., depending on their professional background.",
+                "correct": false
+            },
+            "rag": {
+                "answer": " The candidate has experience in the telecom industry in South Asia.",
+                "correct": true,
+                "retrieved_context": [
+                    "Worked in the telecom industry in South Asia.",
+                    "Collaborated with product and engineering teams to deploy models into production."
+                ]
+            }
+        },
+        {
+            "question": "What is a key achievement?",
+            "ground_truth": "12%",
+            "no_rag": {
+                "answer": " A key achievement is a significant or important outcome, goal, or task that has been successfully completed, demonstrating notable progress, skill, or success in a particular field, project, or endeavor. Key achievements can often be quantifiable and are often used to showcase an individual's skills, qualifications, and contributions in a resume or job application. These accomplishments may include leading a successful project, achieving a major sales target, publishing research findings, winning awards, or making significant improvements in an organization or community.",
+                "correct": false
+            },
+            "rag": {
+                "answer": " A key achievement is improving customer retention by 12%.",
+                "correct": true,
+                "retrieved_context": [
+                    "Improved customer retention by 12% using machine learning.",
+                    "Built a churn prediction model processing 3M+ daily records."
+                ]
+            }
+        },
+        {
+            "question": "Is the candidate suitable for an ML role?",
+            "ground_truth": "machine learning",
+            "no_rag": {
+                "answer": " To determine if a candidate is suitable for a Machine Learning (ML) role, you would need to evaluate their skills and experience in several areas. Here are some key factors to consider:\n\n1. **Mathematics and Statistics:** A strong foundation in linear algebra, probability theory, calculus, and statistics is crucial for understanding the underlying principles of ML algorithms and models.\n\n2. **Programming Proficiency:** Python is commonly used in ML due to its simplicity and extensive libraries like NumPy, Pandas, Scikit-learn, TensorFlow, PyTorch, etc. Familiarity with programming concepts, data structures, and object-oriented programming is also important.\n\n3. **Machine Learning Algorithms and Techniques:** Knowledge of various ML algorithms such as linear regression, logistic regression, decision trees, random forests, support vector machines (SVM), k-nearest neighbors (KNN), neural networks, deep learning, reinforcement learning, etc., is essential.\n\n4. **Data Preprocessing and Model Evaluation:** Candidates should have experience in handling missing data, outliers, feature selection, dimensionality reduction, model training, cross-validation, performance metrics, etc.\n\n5. **Domain Knowledge:** Understanding the specific industry or problem domain that the ML project is focused on can help the candidate design more effective solutions tailored to the particular requirements of the task at hand.\n\n6. **Problem-Solving Ability and Critical Thinking:** ML projects often involve dealing with complex, ambiguous, or incomplete data, so strong problem-solving skills and critical thinking are valuable assets for an ML professional.\n\n7. **Communication Skills:** The ability to explain technical concepts to non-technical stakeholders is essential for collaborating effectively within a team and ensuring successful project outcomes.",
+                "correct": true
+            },
+            "rag": {
+                "answer": " Yes, based on the provided context, it seems that the candidate has experience in building and implementing machine learning models, specifically a churn prediction model, which is a common task in an ML role.",
+                "correct": true,
+                "retrieved_context": [
+                    "Improved customer retention by 12% using machine learning.",
+                    "Built a churn prediction model processing 3M+ daily records."
+                ]
+            }
+        }
+    ],
+    "summary": {
+        "total_questions": 4,
+        "rag_accuracy": 0.75,
+        "no_rag_accuracy": 0.25
+    }
+}
