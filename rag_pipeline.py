@@ -3,9 +3,24 @@ import faiss
 import numpy as np
 import ollama
 from prompts import RAG_PROMPT
+import re
+
+INJECTION_PATTERNS = [
+    r"ignore (all |previous |above )?instructions",
+    r"you are now",
+    r"system prompt",
+    r"diagnostic mode",
+    r"repeat (all |the )?context",
+    r"disregard",
+    r"new instruction",
+]
 
 embed_model = SentenceTransformer("all-MiniLM-L6-v2")
 
+def is_poisoned(chunk: str) -> bool:
+    text = chunk.lower()
+    return any(re.search(p, text) for p in INJECTION_PATTERNS)
+    
 def load_chunks():
     with open("data/resume.txt") as f:
         text = f.read()
@@ -20,7 +35,9 @@ def build_index(chunks):
 def retrieve(query, index, chunks, k=2):
     q_emb = embed_model.encode([query])
     D, I = index.search(np.array(q_emb), k)
-    return [chunks[i] for i in I[0]]
+    retrieved = [chunks[i] for i in I[0]]
+    clean = [c for c in retrieved if not is_poisoned(c)] #retreival guardrail
+    return clean
 
 def ask_rag(question, index, chunks):
     context_chunks = retrieve(question, index, chunks)
