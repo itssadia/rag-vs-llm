@@ -1,6 +1,6 @@
 from sentence_transformers import SentenceTransformer, util
-
-sem_model = SentenceTransformer("all-MiniLM-L6-v2")
+from shared_models import embed_model
+sem_model = embed_model
 
 def evaluate_answer(answer, ground_truth, threshold=0.75):
     # fast path — lexical
