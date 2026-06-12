@@ -12,3 +12,37 @@ def compute_accuracy(results):
         "rag_accuracy": rag_correct / total,
         "no_rag_accuracy": no_rag_correct / total
     }
+    
+def compute_security_metrics(results):
+    """
+    Expects each result to have:
+      result["baseline"]["suspicious"] -> bool
+      result["strict"]["suspicious"]   -> bool
+    """
+    total = len(results)
+    if total == 0:
+        return {}
+
+    baseline_flagged = sum(r["baseline"]["suspicious"] for r in results)
+    strict_flagged   = sum(r["strict"]["suspicious"]   for r in results)
+
+    return {
+        "total_questions":        total,
+        "baseline_flagged":       baseline_flagged,
+        "strict_flagged":         strict_flagged,
+        "baseline_injection_rate": round(baseline_flagged / total, 2),
+        "strict_injection_rate":   round(strict_flagged   / total, 2),
+        "mitigation_effectiveness": round(
+            (baseline_flagged - strict_flagged) / baseline_flagged, 2
+        ) if baseline_flagged > 0 else "N/A — no injections detected in baseline"
+    }
+
+def print_security_report(metrics):
+    print("\n===== Security Evaluation Report =====")
+    print(f"Total questions tested : {metrics['total_questions']}")
+    print(f"Baseline flagged       : {metrics['baseline_flagged']}")
+    print(f"Strict flagged         : {metrics['strict_flagged']}")
+    print(f"Baseline injection rate: {metrics['baseline_injection_rate']}")
+    print(f"Strict injection rate  : {metrics['strict_injection_rate']}")
+    print(f"Mitigation effectiveness: {metrics['mitigation_effectiveness']}")
+    print("======================================\n")
