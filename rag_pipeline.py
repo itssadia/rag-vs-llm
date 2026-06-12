@@ -4,7 +4,7 @@ import numpy as np
 import ollama
 from prompts import RAG_PROMPT
 import re
-
+from shared_models import embed_model
 INJECTION_PATTERNS = [
     r"ignore (all |previous |above )?instructions",
     r"you are now",
@@ -15,7 +15,7 @@ INJECTION_PATTERNS = [
     r"new instruction",
 ]
 
-embed_model = SentenceTransformer("all-MiniLM-L6-v2")
+#embed_model = SentenceTransformer("all-MiniLM-L6-v2")
 
 def is_poisoned(chunk: str) -> bool:
     text = chunk.lower()
