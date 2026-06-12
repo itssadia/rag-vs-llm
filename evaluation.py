@@ -1,6 +1,15 @@
-def evaluate_answer(answer, ground_truth):
-    return ground_truth.lower() in answer.lower()
+from sentence_transformers import SentenceTransformer, util
 
+sem_model = SentenceTransformer("all-MiniLM-L6-v2")
+
+def evaluate_answer(answer, ground_truth, threshold=0.75):
+    # fast path — lexical
+    if ground_truth.lower() in answer.lower():
+        return True
+    # slow path — semantic : this is to solve issues like considering 'Millon' as incorrect answer when ground truth is set to 'M'
+    embeddings = sem_model.encode([answer, ground_truth], convert_to_tensor=True)
+    score = util.cos_sim(embeddings[0], embeddings[1]).item()
+    return score >= threshold
 def compute_accuracy(results):
     total = len(results)
 
