@@ -26,4 +26,36 @@ It is because Mistral is pretty capable of handling this. However, with larger c
 Another notable point is, the accuracy metric here is totally dependent on finding the ground truth as an exact match. So, in case of using direct contextual prompt without RAG, results like "million" is considered wrong if the ground truth is "M", which is not ideal.
 
 To conclude, this experiment can be seen just as an idea of how information is retrieved using RAG and how LLM can benefit from it. This very model or dataset do not claim production level example/benchmark. It is more about encouraging to start thinking about the backend technology of RAG.
+# Latest Progress-— Security Research Extension
+The codebase has been modified to address few limitations from the initial stages.
+### What Changed
+**Attack Surface**
+- Added a poisoned document (`data/poisoned.txt`) containing a hidden prompt 
+  injection payload embedded within realistic HR content
+- Injection demonstrates data exfiltration via context dump when retrieved 
+  by the RAG pipeline
 
+**Defenses Implemented**
+- Hardened prompt template with explicit context delimiters and 
+  anti-instruction directives (`RAG_PROMPT_STRICT`)
+- Retrieval-time guardrails that flag chunks matching known injection patterns
+- Output validation that detects suspicious responses before surfacing to user
+
+**Infrastructure**
+- Multi-source document indexing with provenance tracking (chunk → source)
+- Section-aware chunking replacing naive line splitting for accurate retrieval
+- Shared model instance (`shared_models.py`) to avoid redundant loading
+- Security guardrails isolated in `security/guardrails.py`
+
+**Evaluation**
+- Semantic similarity scoring replaces lexical ground truth matching
+- Security metrics added: injection rate, mitigation effectiveness
+- Results saved to timestamped JSON files under `results/`
+- Interactive mode for runtime questions with live prompt version switching
+## Key Finding
+The baseline RAG pipeline is vulnerable to prompt injection via poisoned 
+documents in the vector index. A hardened prompt template combined with 
+retrieval-time guardrails reduces the injection success rate significantly, 
+with a measurable but acceptable impact on response quality.
+
+Full threat analysis and attack writeup coming soon.
